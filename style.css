@@ -1,0 +1,22 @@
+
+body{
+    background-color: snow  ;
+
+    margin: 20px;
+}
+
+.row {
+    --bs-gutter-x: 4rem;
+    --bs-gutter-y: 4rem;
+ 
+}
+
+#search-field{
+    height: 40px;
+    width: 400px;
+}
+
+
+.card-img, .card-img-bottom, .card-img-top {
+    width: 70%;
+}
