@@ -23,7 +23,7 @@ const loadPhone = searchPhone => {
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchPhone}`;
     fetch(url)
         .then(res => res.json())
-        .then(data => displayPhone(data));
+        .then(data => displayPhone(data.data));
 }
 
 loadPhone();
@@ -34,16 +34,14 @@ const displayPhone = phones => {
     // console.log(phones.data);
     const container = document.getElementById('phones');
     // console.log(container);
-    const phone = phones.data;
+    const phone = phones;
     // console.log(phone);
     container.textContent = '';
 
 
     phone.forEach(phone2 => {
         const div = document.createElement('div');
-        div.classList.add('col');
         div.innerHTML = `
-        <div onclick="phoneIdLoad(${phone2.slug})" class="card h-100">
         
         <h5> Brand : ${phone2.brand}</h5>
         <p> Name :  ${phone2.phone_name}</p>
@@ -51,8 +49,8 @@ const displayPhone = phones => {
         
         <img src="${phone2.image}" class="card-img-top" alt="...">
         <br>
-        <button class = " mx-4 my-4">Details</button>
-         </div>
+        <button onclick="phoneIdLoad('${phone2.slug}')">Details</button>
+        
         `;
 
         container.appendChild(div);
@@ -67,23 +65,29 @@ const displayPhone = phones => {
 
 
 // Phone Id
-const phoneIdLoad = slug => {
-    const url = `https://openapi.programming-hero.com/api/phone/${slug}`;
+const phoneIdLoad = id => {
+
+    const url = `https://openapi.programming-hero.com/api/phone/${id}`;
     fetch(url)
         .then(res => res.json())
-        .then(data => displayMealDetail(data.data));
+        .then(data => phoneDetails(data.data));
 }
 
-phoneIdLoad();
-
-const displayMealDetail = phone2 => {
-
-    const container = document.getElementById('phoneId');
-    const div = document.createElement('div');
-    div.classList.add('card');
-    div.innerHTML = `
-                <div class="card-body">
-                <h5 class="card-title">${phone2.slug}</h5>
-                    `;
-    container.appendChild(div);
+const phoneDetails = phoneId => {
+    console.log(phoneId.mainFeatures);
+    const phoneDiv = document.getElementById('phoneId');
+    phoneDiv.innerHTML = `
+    <div class="card-body">
+    <img src="${phoneId.image}" class="card-img-top" alt="...">
+    <h5>Slug : ${phoneId.slug}</h5>
+    <p>ReleaseDate : ${phoneId.mainFeatures.releaseDate}</p>
+    <p>Storage : ${phoneId.mainFeatures.storage}</p>
+    <p> DisplaySize : ${phoneId.mainFeatures.displaySize} </p>
+    <p> Memory : ${phoneId.mainFeatures.memory} </p>
+    <p> ChipSet : ${phoneId.mainFeatures.chipSet} </p>
+    
+        
+    `
 }
+
+
