@@ -7,11 +7,17 @@ const showHideSpinner = displayStyle => {
     document.getElementById('spinner').style.display = displayStyle;
 }
 
+const showHideDetails = displayStyle => {
+    document.getElementById('phoneId').style.display = displayStyle;
+}
+
+
 
 const searchPhone = () => {
     const searchText = document.getElementById('search-field').value;
     showHideSpinner('block');
     showHideSearchResult('none');
+    showHideDetails('none');
     loadPhone(searchText);
     document.getElementById('search-field').value = '';
 
@@ -58,6 +64,7 @@ const displayPhone = phones => {
     });
     showHideSpinner('none');
     showHideSearchResult('block');
+
 }
 
 
@@ -76,6 +83,7 @@ const phoneIdLoad = id => {
 const phoneDetails = phoneId => {
     console.log(phoneId.mainFeatures);
     const phoneDiv = document.getElementById('phoneId');
+    phoneDiv.textContent = '';
     phoneDiv.innerHTML = `
     <div class="card-body">
     <img src="${phoneId.image}" class="card-img-top" alt="...">
@@ -88,6 +96,7 @@ const phoneDetails = phoneId => {
     
         
     `
+    showHideDetails('block');
 }
 
 
